@@ -93,6 +93,6 @@ When adding new skills:
 4. Include clear trigger descriptions in YAML frontmatter
 5. Write descriptions in third person
 
-## License
+## 📄 License
 
-[Add your license here]
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
