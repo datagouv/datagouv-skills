@@ -2,14 +2,14 @@
 
 Agent skills (using the open SKILL.md standard) for interacting with data.gouv.fr and its three APIs. Compatible with any LLM/agent supporting SKILL.md (Cursor, Claude, local models, Windsurf, etc.).
 
-## Available Skills
+## 🧩 Available Skills
 
 - **`datagouv-main-api`** - Main API for datasets, organizations, users, and resources
 - **`datagouv-tabular-api`** - Tabular data browsing and querying
 - **`datagouv-metrics-api`** - Usage statistics and analytics
 - **`datagouv-mcp`** - data.gouv.fr MCP server: tool list, when to use each, and typical workflow (for when the chatbot has the MCP configured)
 
-## Installation
+## ⚙️ Installation
 
 Clone this repo, then copy the `skills/` folder (or individual skill folders) into your chatbot's skills directory:
 
@@ -25,7 +25,7 @@ Clone this repo, then copy the `skills/` folder (or individual skill folders) in
 
 To install only some skills, copy only the folders you need (e.g. `skills/datagouv-main-api`).
 
-## Repository Structure
+## 🗂️ Repository Structure
 
 ```
 skills/
@@ -36,11 +36,11 @@ skills/
     └── SKILL.md
 ```
 
-## MCP server
+## 🔌 MCP server
 
-data.gouv.fr provides an **MCP (Model Context Protocol) server** (hosted at `https://mcp.data.gouv.fr/mcp`) so LLMs can call its APIs via tools. If your chatbot is configured with it, prefer those MCP tools when they match the operation. The **`datagouv-mcp`** skill documents the available tools, their parameters, and when to use each; the other skills (main, tabular, metrics) still give API context useful with or without MCP.
+data.gouv.fr provides an **MCP (Model Context Protocol) server** (hosted at `https://mcp.data.gouv.fr/mcp`) so LLMs can call its APIs via tools. If your chatbot is configured with it, prefer those MCP tools when they match the operation. The **`datagouv-mcp`** skill documents the available tools, their parameters, and when to use each; the other skills (main, tabular, metrics) still give API context useful with or without MCP. Repository: https://github.com/datagouv/datagouv-mcp
 
-## Usage
+## ✅ Usage
 
 After installation, restart your LLM/agent client. Skills are automatically discovered and used when relevant.
 
@@ -51,7 +51,7 @@ ls ~/.cursor/skills/datagouv-*          # Cursor
 ls ~/Library/Application\ Support/Claude/skills/datagouv-*  # Claude (macOS)
 ```
 
-## For Local Models / Custom Clients
+## 🧠 For Local Models / Custom Clients
 
 If you're building a custom client, you need to:
 1. Read SKILL.md files from the skills directory
@@ -79,12 +79,12 @@ def load_skills(skills_dir):
     return skills
 ```
 
-## Troubleshooting
+## 🧯 Troubleshooting
 
 - **Skills not working?** Restart your client (skills load at startup)
 - **Wrong path?** Check your client's documentation for the skills directory location
 
-## Contributing
+## 🤝 Contributing
 
 When adding new skills:
 1. Follow the [SKILL.md standard](https://github.com/getcursor/skills)
