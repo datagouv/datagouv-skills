@@ -5,7 +5,7 @@ Practical examples for using the main data.gouv.fr API.
 ## Example 1: Search for Transportation Datasets
 
 ```python
-import requests
+import httpx
 
 def search_transport_datasets():
     url = "https://www.data.gouv.fr/api/1/datasets/"
@@ -14,7 +14,7 @@ def search_transport_datasets():
         "page_size": 20,
         "sort": "-created"
     }
-    response = requests.get(url, params=params)
+    response = httpx.get(url, params=params)
     data = response.json()
     
     print(f"Found {data['total']} datasets")
@@ -27,46 +27,47 @@ def search_transport_datasets():
 datasets = search_transport_datasets()
 ```
 
-## Example 2: Get Dataset and Download Resources
+## Example 2: Get Dataset and Its Resources
+
+Resources are embedded in the dataset object (no separate `GET /resources/` endpoint).
 
 ```python
-import requests
+import httpx
 
-def get_dataset_resources(dataset_id):
-    # Get dataset details
+def get_dataset_resources(dataset_id: str):
     dataset_url = f"https://www.data.gouv.fr/api/1/datasets/{dataset_id}/"
-    dataset = requests.get(dataset_url).json()
+    response = httpx.get(dataset_url)
+    response.raise_for_status()
+    dataset = response.json()
     
     print(f"Dataset: {dataset['title']}")
     print(f"Description: {dataset['description'][:100]}...")
     
-    # Get resources
-    resources_url = f"https://www.data.gouv.fr/api/1/datasets/{dataset_id}/resources/"
-    resources = requests.get(resources_url).json()
-    
-    print(f"\nResources ({len(resources['data'])}):")
-    for resource in resources['data']:
+    # Resources are in dataset['resources']
+    resources = dataset.get("resources", [])
+    print(f"\nResources ({len(resources)}):")
+    for resource in resources:
         print(f"- {resource['title']}: {resource['url']}")
     
-    return dataset, resources
+    return dataset
 
-# Usage
-dataset_id = "53699528a3a729239d2051c0"
-dataset, resources = get_dataset_resources(dataset_id)
+# Usage (use a dataset ID from search results)
+dataset_id = "53ba5b91a3a729219b7beae9"  # Example dataset
+dataset = get_dataset_resources(dataset_id)
 ```
 
 ## Example 3: Find Datasets by Organization
 
 ```python
-import requests
+import httpx
 
-def get_organization_datasets(org_id):
+def get_organization_datasets(org_id: str):
     url = "https://www.data.gouv.fr/api/1/datasets/"
     params = {
         "organization": org_id,
         "page_size": 100
     }
-    response = requests.get(url, params=params)
+    response = httpx.get(url, params=params)
     data = response.json()
     
     print(f"Organization has {data['total']} datasets")
@@ -80,7 +81,7 @@ datasets = get_organization_datasets(org_id)
 ## Example 4: Search with Pagination
 
 ```python
-import requests
+import httpx
 from typing import List, Dict
 
 def get_all_datasets(query: str, max_results: int = 100) -> List[Dict]:
@@ -96,7 +97,7 @@ def get_all_datasets(query: str, max_results: int = 100) -> List[Dict]:
             "page": page,
             "page_size": page_size
         }
-        response = requests.get(url, params=params)
+        response = httpx.get(url, params=params)
         data = response.json()
         
         if not data['data']:
@@ -120,7 +121,7 @@ print(f"Retrieved {len(all_transport)} datasets")
 ## Example 5: Filter by Tags
 
 ```python
-import requests
+import httpx
 
 def get_datasets_by_tag(tag: str):
     url = "https://www.data.gouv.fr/api/1/datasets/"
@@ -128,24 +129,26 @@ def get_datasets_by_tag(tag: str):
         "tag": tag,
         "page_size": 50
     }
-    response = requests.get(url, params=params)
+    response = httpx.get(url, params=params)
     data = response.json()
     
     print(f"Found {data['total']} datasets with tag '{tag}'")
     return data['data']
 
-# Usage
-geodata = get_datasets_by_tag("geodata")
+# Usage (e.g. transport, donnees-ouvertes, amenagements-cyclables)
+datasets = get_datasets_by_tag("transport")
 ```
 
 ## Example 6: Get Organization Details
 
 ```python
-import requests
+import httpx
 
 def get_organization_info(org_id: str):
     url = f"https://www.data.gouv.fr/api/1/organizations/{org_id}/"
-    org = requests.get(url).json()
+    response = httpx.get(url)
+    response.raise_for_status()
+    org = response.json()
     
     print(f"Organization: {org['name']}")
     print(f"Description: {org.get('description', 'N/A')}")
