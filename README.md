@@ -4,18 +4,18 @@ Agent skills (using the open SKILL.md standard) for interacting with data.gouv.f
 
 ## 🧩 Available Skills
 
-- **`datagouv-main-api`** - Main API for datasets, organizations, users, and resources
-- **`datagouv-tabular-api`** - Tabular data browsing and querying
-- **`datagouv-metrics-api`** - Usage statistics and analytics
-- **`datagouv-mcp`** - data.gouv.fr MCP server: tool list, when to use each, and typical workflow (for when the chatbot has the MCP configured)
+- **`datagouv-main-api`** — Catalog API: search and manage datasets, organizations, users, resources, reuses, discussions (read public; write with API key).
+- **`datagouv-tabular-api`** — Query CSV/tabular rows by resource ID (from main API): filter, sort, paginate; column profile and aggregation.
+- **`datagouv-metrics-api`** — Usage and download metrics by model (e.g. dataset, org): filter, sort, CSV export.
+- **`datagouv-mcp`** — data.gouv.fr MCP server to automatically help and guide chatbots troughout the usa of the data.gouv.fr APIs: tool list, when to use each, and typical workflow (for when the chatbot has the MCP configured).
 
 ## ⚙️ Installation
 
 Clone this repo, then copy the `skills/` folder (or individual skill folders) into your chatbot's skills directory:
 
-**Cursor**
-- Personal: `cp -r skills/* ~/.cursor/skills/`
-- Project: `cp -r skills/* .cursor/skills/`
+**Cursor** (see [Cursor docs: Skills](https://cursor.com/docs/context/skills))
+- **From GitHub (recommended):** Cursor Settings → Rules → Project Rules → Add Rule → *Remote Rule (Github)* → enter `https://github.com/datagouv/datagouv-skills`. Skills are then loaded from the repo without copying files.
+- **Copy locally:** User-level: `cp -r skills/* ~/.cursor/skills/`. Project-level: `cp -r skills/* .cursor/skills/` (from this repo; or copy into `.cursor/skills/` of another project). Paths: [Cursor docs](https://cursor.com/docs/context/skills).
 
 **Claude**
 - MacOS: `cp -r skills/* ~/Library/Application\ Support/Claude/skills/`
@@ -32,7 +32,7 @@ skills/
 ├── datagouv-main-api/
 ├── datagouv-tabular-api/
 ├── datagouv-metrics-api/
-└── datagouv-mcp/          # MCP server tools (when MCP is configured)
+└── datagouv-mcp/
     └── SKILL.md
 ```
 
@@ -44,6 +44,8 @@ data.gouv.fr provides an **MCP (Model Context Protocol) server** (hosted at `htt
 
 After installation, restart your LLM/agent client. Skills are automatically discovered and used when relevant.
 
+**Cursor:** You can also invoke a skill manually by typing `/` in Agent chat and searching for the skill name. To see discovered skills: **Cursor Settings → Rules** — they appear in the **Agent Decides** section.
+
 **Verify installation:**
 ```bash
 # Check skills are installed
@@ -54,9 +56,9 @@ ls ~/Library/Application\ Support/Claude/skills/datagouv-*  # Claude (macOS)
 ## 🧠 For Local Models / Custom Clients
 
 If you're building a custom client, you need to:
-1. Read SKILL.md files from the skills directory
-2. Parse YAML frontmatter (`name`, `description`)
-3. Inject skill content into prompts when relevant
+1. Discover skill subdirectories (e.g. `skills/datagouv-main-api/`, `skills/datagouv-metrics-api/`) and read the **SKILL.md** in each
+2. Parse YAML frontmatter (`name`, `description`) from each file
+3. Inject the relevant skill content into prompts when a task matches
 
 **Example Python snippet:**
 ```python
@@ -87,7 +89,7 @@ def load_skills(skills_dir):
 ## 🤝 Contributing
 
 When adding new skills:
-1. Follow the [SKILL.md standard](https://github.com/getcursor/skills)
+1. Follow the [SKILL.md standard](https://cursor.com/docs/context/skills) (see also [agentskills.io](https://agentskills.io))
 2. Keep SKILL.md under 500 lines
 3. Use progressive disclosure (reference.md, examples.md for details)
 4. Include clear trigger descriptions in YAML frontmatter
