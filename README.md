@@ -7,7 +7,6 @@ Agent skills (using the open SKILL.md standard) for interacting with data.gouv.f
 - **`datagouv-main-api`** — Catalog API: search and manage datasets, organizations, users, resources, reuses, discussions (read public; write with API key).
 - **`datagouv-tabular-api`** — Query CSV/tabular rows by resource ID (from main API): filter, sort, paginate; column profile and aggregation.
 - **`datagouv-metrics-api`** — Usage and download metrics by model (e.g. dataset, org): filter, sort, CSV export.
-- **`datagouv-mcp`** — data.gouv.fr MCP server to automatically help and guide chatbots troughout the usa of the data.gouv.fr APIs: tool list, when to use each, and typical workflow (for when the chatbot has the MCP configured).
 
 ## ⚙️ Installation
 
@@ -46,17 +45,22 @@ To install only some skills, copy only the folders you need (e.g. `skills/datago
 ```
 skills/
 ├── datagouv-main-api/
+│   ├── SKILL.md
+│   ├── reference.md
+│   └── examples.md
 ├── datagouv-tabular-api/
-├── datagouv-metrics-api/
-└── datagouv-mcp/
-    └── SKILL.md
+│   ├── SKILL.md
+│   └── reference.md
+└── datagouv-metrics-api/
+    ├── SKILL.md
+    └── reference.md
 ```
 
 ## 🔌 MCP server
 
-data.gouv.fr provides an **MCP (Model Context Protocol) server** (hosted at `https://mcp.data.gouv.fr/mcp`) so LLMs can call its APIs via tools. If your chatbot is configured with it, prefer those MCP tools when they match the operation. The **`datagouv-mcp`** skill documents the available tools, their parameters, and when to use each; the other skills (main, tabular, metrics) still give API context useful with or without MCP. Repository: https://github.com/datagouv/datagouv-mcp
+data.gouv.fr provides an **[MCP (Model Context Protocol) server](https://github.com/datagouv/datagouv-mcp)** (hosted at `https://mcp.data.gouv.fr/mcp`) so LLMs can call its APIs via tools. Both options are valid: **MCP tools** offer structured calls with clear parameters; **skills** provide richer context (workflows, examples, edge cases) and can sometimes yield better results on complex tasks. Use whichever fits your setup — or both. See the [datagouv-mcp repository](https://github.com/datagouv/datagouv-mcp) for MCP setup and documentation.
 
-## ✅ Usage
+## 🧠 Usage
 
 After installation, restart your LLM/agent client. Skills are automatically discovered and used when relevant.
 
@@ -72,34 +76,6 @@ ls ~/.vibe/skills/datagouv-*            # Mistral Vibe (global)
 ls ~/Library/Application\ Support/Claude/skills/datagouv-*  # Claude desktop (macOS)
 ```
 
-## 🧠 For Local Models / Custom Clients
-
-If you're building a custom client, you need to:
-1. Discover skill subdirectories (e.g. `skills/datagouv-main-api/`, `skills/datagouv-metrics-api/`) and read the **SKILL.md** in each
-2. Parse YAML frontmatter (`name`, `description`) from each file
-3. Inject the relevant skill content into prompts when a task matches
-
-**Example Python snippet:**
-```python
-import yaml
-from pathlib import Path
-
-def load_skills(skills_dir):
-    skills = {}
-    for skill_dir in Path(skills_dir).iterdir():
-        skill_file = skill_dir / "SKILL.md"
-        if skill_file.exists():
-            content = skill_file.read_text()
-            if content.startswith("---"):
-                parts = content.split("---", 2)
-                frontmatter = yaml.safe_load(parts[1])
-                skills[frontmatter['name']] = {
-                    'description': frontmatter['description'],
-                    'content': parts[2].strip()
-                }
-    return skills
-```
-
 ## 🧯 Troubleshooting
 
 - **Skills not working?** Restart your client (skills load at startup)
@@ -111,8 +87,7 @@ When adding new skills:
 1. Follow the [SKILL.md standard](https://cursor.com/docs/context/skills) (see also [agentskills.io](https://agentskills.io))
 2. Keep SKILL.md under 500 lines
 3. Use progressive disclosure (reference.md, examples.md for details)
-4. Include clear trigger descriptions in YAML frontmatter
-5. Write descriptions in third person
+4. Write descriptions in third person
 
 ## 📄 License
 
