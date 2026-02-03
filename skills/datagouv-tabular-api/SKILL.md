@@ -7,6 +7,8 @@ description: Query tabular/CSV data for data.gouv.fr resources by resource ID. U
 
 Query tabular data for a given **resource ID** (from the main data.gouv.fr API). Supports filtering, sorting, pagination, and aggregation.
 
+**If the data.gouv.fr MCP server is configured,** prefer its tools for Tabular API operations when available. The details below (endpoints, operators) still apply with or without MCP.
+
 **Production base URL:** `https://tabular-api.data.gouv.fr`  
 **Authoritative reference (Swagger):** https://tabular-api.data.gouv.fr/api/doc — **check the Swagger for up-to-date endpoints and parameters.**
 

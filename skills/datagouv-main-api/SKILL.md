@@ -7,6 +7,8 @@ description: Interact with the main data.gouv.fr API to search datasets, organiz
 
 Interact with the main data.gouv.fr API to access datasets, organizations, users, and other core resources.
 
+**If the data.gouv.fr MCP server is configured,** prefer its tools for these operations when available. The details below (endpoints, parameters) still apply and can be used with or without MCP.
+
 ## Base URL
 
 ```

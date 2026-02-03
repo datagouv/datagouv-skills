@@ -7,6 +7,7 @@ Agent skills (using the open SKILL.md standard) for interacting with data.gouv.f
 - **`datagouv-main-api`** - Main API for datasets, organizations, users, and resources
 - **`datagouv-tabular-api`** - Tabular data browsing and querying
 - **`datagouv-metrics-api`** - Usage statistics and analytics
+- **`datagouv-mcp`** - data.gouv.fr MCP server: tool list, when to use each, and typical workflow (for when the chatbot has the MCP configured)
 
 ## Installation
 
@@ -17,7 +18,7 @@ Clone this repo, then copy the `skills/` folder (or individual skill folders) in
 - Project: `cp -r skills/* .cursor/skills/`
 
 **Claude**
-- macOS: `cp -r skills/* ~/Library/Application\ Support/Claude/skills/`
+- MacOS: `cp -r skills/* ~/Library/Application\ Support/Claude/skills/`
 - Linux: `cp -r skills/* ~/.config/claude/skills/`
 
 **Other chatbots** — Copy `skills/*` into your client's skills directory (see its documentation for the path).
@@ -29,14 +30,15 @@ To install only some skills, copy only the folders you need (e.g. `skills/datago
 ```
 skills/
 ├── datagouv-main-api/
-│   ├── SKILL.md          # Required: main instructions
-│   ├── reference.md      # Optional: API reference
-│   └── examples.md        # Optional: code examples
 ├── datagouv-tabular-api/
-│   └── SKILL.md
-└── datagouv-metrics-api/
+├── datagouv-metrics-api/
+└── datagouv-mcp/          # MCP server tools (when MCP is configured)
     └── SKILL.md
 ```
+
+## MCP server
+
+data.gouv.fr provides an **MCP (Model Context Protocol) server** (hosted at `https://mcp.data.gouv.fr/mcp`) so LLMs can call its APIs via tools. If your chatbot is configured with it, prefer those MCP tools when they match the operation. The **`datagouv-mcp`** skill documents the available tools, their parameters, and when to use each; the other skills (main, tabular, metrics) still give API context useful with or without MCP.
 
 ## Usage
 

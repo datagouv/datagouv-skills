@@ -7,6 +7,8 @@ description: Retrieve metrics data for data.gouv.fr (by model type). Use when an
 
 Retrieve metric data for a given **model** (object type). Supports filtering, sorting, pagination, and CSV export.
 
+**If the data.gouv.fr MCP server is configured,** prefer its tools for Metrics API operations when available. The details below (endpoints, query params) still apply with or without MCP.
+
 **Production base URL:** `https://metric-api.data.gouv.fr`  
 **Authoritative reference (Swagger):** https://metric-api.data.gouv.fr/api/doc — **check the Swagger for up-to-date endpoints and parameters.**
 
