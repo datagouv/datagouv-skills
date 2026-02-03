@@ -12,31 +12,52 @@ Agent skills (using the open SKILL.md standard) for interacting with data.gouv.f
 
 Clone this repo, then copy the `skills/` folder (or individual skill folders) into your chatbot's skills directory:
 
-**Claude Code** (see [Claude Code docs: Skills](https://code.claude.com/docs/en/skills))
+### 🤖 Claude Code
+
+See [Claude Code docs: Skills](https://code.claude.com/docs/en/skills).
+
 - Personal (all projects): `cp -r skills/* ~/.claude/skills/`
 - Project-only: `cp -r skills/* .claude/skills/` (from this repo into `.claude/skills/` of the target project)
 
-**Cursor** (see [Cursor docs: Skills](https://cursor.com/docs/context/skills))
+### 🤖 Cursor
+
+See [Cursor docs: Skills](https://cursor.com/docs/context/skills).
+
 - **From GitHub (recommended):** Cursor Settings → Rules → Project Rules → Add Rule → *Remote Rule (Github)* → enter `https://github.com/datagouv/datagouv-skills`. Skills are then loaded from the repo without copying files.
 - **Copy locally:** User-level: `cp -r skills/* ~/.cursor/skills/`. Project-level: `cp -r skills/* .cursor/skills/` (from this repo; or copy into `.cursor/skills/` of another project). Paths: [Cursor docs](https://cursor.com/docs/context/skills).
 
-**Mistral (Vibe)** (see [Mistral docs: Agents & Skills](https://docs.mistral.ai/mistral-vibe/agents-skills)) — Vibe discovers skills from directories containing `SKILL.md` (same format: YAML frontmatter + markdown). Custom paths and enable/disable patterns: `config.toml` (`skill_paths`, `enabled_skills`, `disabled_skills`).
+### 🤖 Mistral (Vibe)
+
+See [Mistral docs: Agents & Skills](https://docs.mistral.ai/mistral-vibe/agents-skills).
+
+Vibe discovers skills from directories containing `SKILL.md` (same format: YAML frontmatter + markdown). Custom paths and enable/disable patterns: `config.toml` (`skill_paths`, `enabled_skills`, `disabled_skills`).
+
 - Global (all projects): `cp -r skills/* ~/.vibe/skills/`
 - Project-only: `cp -r skills/* .vibe/skills/` (from this repo into `.vibe/skills/` of the target project)
 
-**Claude (desktop app)**
+### 🤖 Claude (desktop app)
+
 - MacOS: `cp -r skills/* ~/Library/Application\ Support/Claude/skills/`
 - Linux: `cp -r skills/* ~/.config/claude/skills/`
 
-**Codex CLI** (OpenAI; see [Codex docs: Skills](https://github.com/openai/codex/blob/main/docs/skills.md)) — Experimental support. Any folder under `~/.codex/skills` is treated as a skill (must contain `SKILL.md`).
+### 🤖 Codex CLI (OpenAI)
+
+See [Codex docs: Skills](https://github.com/openai/codex/blob/main/docs/skills.md).
+
+Experimental support. Any folder under `~/.codex/skills` is treated as a skill (must contain `SKILL.md`).
+
 - Install: `cp -r skills/* ~/.codex/skills/` (or clone this repo into `~/.codex/skills/datagouv-skills` and symlink/copy the skill subfolders).
 - Run with skills enabled: `codex --enable skills -m <model>`. In the session, type `list skills` to see loaded skills.
 
-**ChatGPT** (Code Interpreter) — ChatGPT’s Code Interpreter uses a similar skill format: a `/home/oai/skills` folder with subfolders each containing a `skill.md`. That folder is part of the sandbox and is not user-installable (it is pre-populated by OpenAI with e.g. PDF/docs/spreadsheet skills). To use data.gouv.fr skills in ChatGPT:
+### 🤖 ChatGPT (Code Interpreter)
+
+ChatGPT’s Code Interpreter uses a similar skill format: a `/home/oai/skills` folder with subfolders each containing a `skill.md`. That folder is part of the sandbox and is not user-installable (it is pre-populated by OpenAI with e.g. PDF/docs/spreadsheet skills). To use data.gouv.fr skills in ChatGPT:
 - **Per conversation:** At the start of a chat, paste the content of the relevant `SKILL.md` (and optionally `reference.md`) from this repo, or upload those files, and ask the model to follow that guidance when working with the data.gouv.fr API.
 - **Reference:** You can point the model to this repo (e.g. “Use the data.gouv.fr API as described in the [datagouv-skills repo](https://github.com/datagouv/datagouv-skills)”) and share the raw file URLs (e.g. from GitHub) so it can fetch and apply the instructions.
 
-**Other chatbots** — Copy `skills/*` into your client's skills directory (see its documentation for the path).
+### 🤖 Other chatbots
+
+Copy `skills/*` into your client's skills directory (see its documentation for the path).
 
 To install only some skills, copy only the folders you need (e.g. `skills/datagouv-main-api`).
 
