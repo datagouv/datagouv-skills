@@ -1,0 +1,13 @@
+# Cursor skills (if users want to install locally)
+.cursor/skills/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
