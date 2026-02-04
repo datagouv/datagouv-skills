@@ -1,4 +1,4 @@
-# data.gouv.fr Skills Repository
+# data.gouv.fr skill
 
 Agent skill (SKILL.md) for interacting with data.gouv.fr and its three APIs: **Main** (catalog), **Metrics** (usage), **Tabular** (CSV rows). Compatible with any LLM/agent supporting SKILL.md (Claude Code, Cursor, ChatGPT, Codex CLI, Mistral Vibe, etc.).
 
